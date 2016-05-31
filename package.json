@@ -1,6 +1,6 @@
 {
   "name": "reflux-partial",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plugin for reflux-core to use part of state",
   "main": "index.js",
   "scripts": {
