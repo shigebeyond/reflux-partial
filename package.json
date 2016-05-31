@@ -1,0 +1,30 @@
+{
+  "name": "reflux-partial",
+  "version": "1.0.0",
+  "description": "Plugin for reflux-core to use part of state",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shigebeyond/reflux-partial.git"
+  },
+  "keywords": [
+    "react",
+    "reflux",
+    "refluxjs",
+    "part",
+    "partial",
+    "state"
+  ],
+  "author": "shigebeyond",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shigebeyond/reflux-partial/issues"
+  },
+  "homepage": "https://github.com/shigebeyond/reflux-partial#readme",
+  "peerDependencies": {
+    "reflux-core": "^0.3.0"
+  },
+}
