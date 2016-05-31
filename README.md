@@ -31,12 +31,13 @@ You can read the state by this.getState() in the store, just like this.state in 
 ```javascript
 
 import Reflux from "reflux";
+import RefluxPartial from "reflux-partial";
 
 // Extend connect
-Reflux.connect = require('./connect');
+Reflux.connect = RefluxPartial.connect;
 
 // Extend store
-Reflux.StoreMethods = Object.assign(Reflux.StoreMethods, require('./StoreMethods'));
+Reflux.StoreMethods = Object.assign(Reflux.StoreMethods, RefluxPartial.StoreMethods);
 
 ```
 
