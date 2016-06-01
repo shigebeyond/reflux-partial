@@ -1,6 +1,6 @@
 {
   "name": "reflux-partial",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Plugin for reflux-core to use part of state",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "url": "https://github.com/shigebeyond/reflux-partial/issues"
   },
   "homepage": "https://github.com/shigebeyond/reflux-partial#readme",
-  "peerDependencies": {
-    "reflux-core": "^0.3.0"
+  "dependencies": {
+    "reflux": "^0.4.1",
+    "reflux-core": "^0.3.0",
   }
 }

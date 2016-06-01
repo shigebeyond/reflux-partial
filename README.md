@@ -4,7 +4,7 @@
 
 Plugin for reflux-core to use part of state, extends at
 
-#### 1. Reflux.connect(store, propNames)
+#### 1. Reflux.connectPart(store, propNames)
 
 You can connect part of state from store to component. Because the componet only care about part of state, just like you only care about one of many girls in your class.
 
@@ -126,5 +126,3 @@ ReactMixin.onClass(Sidebar, Reflux.connectPart(MenuStore,['items', 'currentIndex
 
 export default Sidebar;
 ```
-
-
