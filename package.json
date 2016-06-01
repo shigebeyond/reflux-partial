@@ -26,6 +26,6 @@
   "homepage": "https://github.com/shigebeyond/reflux-partial#readme",
   "dependencies": {
     "reflux": "^0.4.1",
-    "reflux-core": "^0.3.0",
+    "reflux-core": "^0.3.0"
   }
 }
