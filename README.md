@@ -120,8 +120,8 @@ class Sidebar extends React.Component {
   }
 }
 
-// connect MenuStore's partial state('items' and 'currentIndex' property) with component Sidebar
-// 将MenuStore中state的 'items' 与 'currentIndex' 属性，绑定到Sidebar组件中
+// connect MenuStore's partial state('items' and 'currentIndex' property) with component Sidebar, so you can use this.state.items / this.state.currentIndex in component
+// 将MenuStore中state的 'items' 与 'currentIndex' 属性，绑定到Sidebar组件中, 这样你就可以在组件中使用部分状态 this.state.items / this.state.currentIndex
 ReactMixin.onClass(Sidebar, Reflux.connectPart(MenuStore,['items', 'currentIndex']));
 
 export default Sidebar;
