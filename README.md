@@ -1,4 +1,4 @@
-# reflux-part
+# reflux-partial
 
 ##What is it
 
@@ -26,7 +26,7 @@ You can read the state by this.getState() in the store, just like this.state in 
 
 #### 1. Install
 
-`npm install reflux-part@latest --save`
+`npm install reflux-partial@latest --save`
 
 #### 2. Extend Reflux
 
