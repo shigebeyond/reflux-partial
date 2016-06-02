@@ -1,10 +1,11 @@
 {
   "name": "reflux-partial",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Plugin for reflux-core to use part of state",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib"
   },
   "repository": {
     "type": "git",
@@ -26,15 +27,14 @@
     "url": "https://github.com/shigebeyond/reflux-partial/issues"
   },
   "homepage": "https://github.com/shigebeyond/reflux-partial#readme",
+  "dependencies": {},
   "peerDependencies": {
     "reflux": "^0.4.1",
     "reflux-core": "^0.3.0"
   },
   "devDependencies": {
-    "babel": "^5.8.19",
-    "babel-eslint": "^4.0.5",
-    "eslint": "^0.24.1",
-    "eslint-watch": "^2.1.4"
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0"
   },
   "readme": "# reflux-part\n\n##What is it\n\nPlugin for reflux-core to use part of state, extends at\n\n#### 1. Reflux.connectPart(store, propNames)\n\nYou can connect part of state from store to component. Because the componet only care about part of state, just like you only care about one of many girls in your class.\n\n你可以将store中的部分state连接到组件中，因为组件很可能只关心部分state，就好像你只关注你们班里的某个女孩。\n\n#### 2. Store.triggerPart(partState)\n\nYou can update part of state, not full of state. This method will help you merge new part and old part in state, and update full of state automatically. For example, you have a state about user(include username, password, birthday, address), but you only change password, so just trigger password.\n\n你可以更新部分state，而不是全部state。该方法可以帮你合并state中的新旧部分，从而自动更新全部state，保证旧部分的state不丢失。例如，你有一个关于用户的state(包含用户名、密码、生日、地址)，但是你只修改了密码，因此只需要触发密码的更新。\n\n#### 3. Store.getState()\n\nYou can read the state by this.getState() in the store, just like this.state in the component.\n\n你可以在store中用 this.getState() 来获得state，就好像你在组件中用 this.state 来获得state。\n\n##How to use it\n\n#### 1. Install\n\n`npm install reflux-part@latest --save`\n\n#### 2. Extend Reflux\n\nTo install partial state functionality do the following in your application's bootstrapper or in a file:\n\n```javascript\nimport Reflux from \"reflux\";\nimport RefluxPartial from \"reflux-partial\";\n\n// Extend connect\nReflux.connectPart = RefluxPartial.connect;\n\n// Extend store\nReflux.StoreMethods = Object.assign(Reflux.StoreMethods, RefluxPartial.StoreMethods);\n\nexport default Reflux;\n```\n\n#### 3. Store\n\nDefine a store, and use triggerPart() to update part of state, use getState() to get full of state.\n\n```\nimport Reflux from '../reflux'; // The Reflux extends by Step 2\nimport { notification } from 'antd';\n\nvar MenuActions = require('../actions/menu');\nimport api from '../api';\n\nvar MenuStore = Reflux.createStore({\n  // this will set up listeners to all publishers in UserActions, using onKeyname (or keyname) as callbacks\n  listenables: [MenuActions],\n  getInitialState: function() {\n    return {\n      currentIndex: 0, // 当前点击的菜单key\n      items: [], // 两级的菜单，以children来关联\n      navpath: [] // 打开的菜单路径\n    };\n  },\n  // 获得菜单\n  onGetAllMenu: function(){\n    api.post('/menu')\n      .then((data) => {\n        this.triggerPart({items: data.menus}); // update part of state\n    }).catch((e) => {\n      notification.error({\n          message: 'Get all menu fail',\n          description: e\n      });\n    });\n  },\n  // 更新菜单路径\n  onUpdateNavPath: function(navpath, key){\n    const {items} = this.getState(); // get state in store\n    this.triggerPart({\n        currentIndex: key,\n        navpath\n    });\n  },\n});\n\nmodule.exports = MenuStore;\n```\n\n#### 4. Component\n\nDefine a component, and connect store's state with this componet.\n\n```\nimport React from 'react';\nimport ReactMixin from 'react-mixin';\nimport Reflux from '../../reflux'; // The Reflux extends by Step 2\nimport MenuActions from '../../actions/menu';\nimport MenuStore from '../../store/menu';\n\nclass Sidebar extends React.Component {\n\n  componentDidMount () {\n    MenuActions.getAllMenu();\n  }\n\n  render () {\n    const { items, currentIndex } = this.state;\n    return (\n      <ol>\n        {items.map((item, i) => {\n          return <li>{item.name}</li>\n        })}\n      </ol>\n    )\n  }\n}\n\n// connect MenuStore's partial state('items' and 'currentIndex' property) with component Sidebar\n// 将MenuStore中state的 'items' 与 'currentIndex' 属性，绑定到Sidebar组件中\nReactMixin.onClass(Sidebar, Reflux.connectPart(MenuStore,['items', 'currentIndex']));\n\nexport default Sidebar;\n```\n",
   "readmeFilename": "README.md",
